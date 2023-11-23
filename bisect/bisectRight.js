@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {number[]} arr
+ * @param {number} item
+ * @returns {number}
+ */
 function bisectRight(arr, item) {
   let low = 0;
   let high = arr.length;
