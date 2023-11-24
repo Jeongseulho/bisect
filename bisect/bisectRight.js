@@ -1,7 +1,7 @@
 /**
  *
  * @param {number[]} arr
- * @param {number} item
+ * @param {number} item item to search
  * @returns {number}
  */
 function bisectRight(arr, item) {

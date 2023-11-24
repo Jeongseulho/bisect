@@ -6,13 +6,13 @@
  * @param {number} n pick n elements from rests
  * @returns {void}
  */
-const combinationsWithReplacement = (comb, rests, output, n) => {
+const combination = (comb, rests, output, n) => {
   if (comb.length == n) {
     return output.push(comb);
   }
   rests.forEach((item, idx) => {
-    combinationsWithReplacement([...comb, item], rests.slice(idx), output, n);
+    combination([...comb, item], rests.slice(idx + 1), output, n);
   });
 };
 
-module.exports = combinationsWithReplacement;
+module.exports = combination;
