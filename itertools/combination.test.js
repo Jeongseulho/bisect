@@ -46,4 +46,22 @@ describe('combination', () => {
     combination(comb, rests, output, n);
     expect(output).toEqual([[]]);
   });
+
+  test('should return all subsets of the array', () => {
+    const rests = [1, 2, 3];
+    const nArr = [0, 1, 2, 3];
+    nArr.forEach((n) => {
+      combination(comb, rests, output, n);
+    });
+    expect(output).toEqual([
+      [],
+      [1],
+      [2],
+      [3],
+      [1, 2],
+      [1, 3],
+      [2, 3],
+      [1, 2, 3],
+    ]);
+  });
 });
