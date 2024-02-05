@@ -1,4 +1,4 @@
-const bisectRight = require('./bisectRight'); // Adjust the path according to your project structure
+const bisectRight = require('./bisectRight');
 
 describe('bisectRight', () => {
   test('should find the correct insert position for an item in a sorted array', () => {

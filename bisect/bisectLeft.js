@@ -1,8 +1,8 @@
 /**
  *
  * @param {number[]} arr
- * @param {number} item item to search
- * @returns {number}
+ * @param {number} item item to insert
+ * @returns {number} index to insert item
  */
 function bisectLeft(arr, item) {
   let low = 0;
