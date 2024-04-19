@@ -20,5 +20,13 @@ myMap.delete('name'); // true
 
 myMap.size; // 2
 
+myMap.keys(); // MapIterator { 'age', 'job' }
+myMap.values(); // MapIterator { 30, 'developer' }
+myMap.entries(); // MapIterator { [ 'age', 30 ], [ 'job', 'developer' ] }
+
+for (const [key, value] of myMap) {
+  console.log(key, value);
+}
+
 // Map {}
 myMap.clear();
