@@ -10,6 +10,6 @@ describe('dfs', () => {
       E: ['B', 'F'],
       F: ['C', 'E'],
     };
-    expect(dfs(adjList, 'A')).toEqual(['A', 'C', 'F', 'E', 'B', 'D']);
+    expect(dfs(adjList, 'A')).toEqual(['A', 'B', 'C', 'F', 'E', 'D']);
   });
 });

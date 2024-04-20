@@ -1,13 +1,15 @@
 function bfs(adjList, startNode) {
-  const visited = [];
+  const visited = [startNode];
   let needVisit = [startNode];
 
   while (needVisit.length !== 0) {
     const node = needVisit.shift();
-    if (!visited.includes(node)) {
-      visited.push(node);
-      needVisit = [...needVisit, ...adjList[node]];
-    }
+    adjList[node].forEach((adjNode) => {
+      if (!visited.includes(adjNode)) {
+        needVisit.push(adjNode);
+        visited.push(adjNode);
+      }
+    });
   }
   return visited;
 }
