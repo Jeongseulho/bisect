@@ -14,3 +14,5 @@ const isSameParent = (parent, a, b) => {
   const n2 = getParent(parent, b);
   return n1 === n2;
 };
+
+module.exports = { getParent, unionParent, isSameParent };
