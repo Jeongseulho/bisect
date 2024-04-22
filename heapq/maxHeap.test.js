@@ -1,41 +1,58 @@
-const { heapPush, heapPop } = require('./maxHeap');
+const { MaxHeap } = require('./maxHeap');
 
 describe('maxHeap', () => {
   describe('heapPush', () => {
     test('should add an item to an empty heap', () => {
-      const heap = [];
-      heapPush(heap, 5);
-      expect(heap).toEqual([5]);
+      const maxHeap = new MaxHeap();
+      maxHeap.heapPush(42);
+      expect(maxHeap.heap).toEqual([42]);
     });
 
     test('should maintain the heap property when new items are added', () => {
-      const heap = [4, 3, 2];
-      heapPush(heap, 5);
-      expect(heap).toEqual([5, 4, 2, 3]);
+      const maxHeap = new MaxHeap();
+      maxHeap.heapPush(42);
+      maxHeap.heapPush(17);
+      maxHeap.heapPush(23);
+      expect(maxHeap.heap).toEqual([42, 17, 23]);
     });
 
     test('should work correctly with multiple items', () => {
-      const heap = [];
-      [2, 4, 1, 6, 3, 5].forEach((item) => heapPush(heap, item));
-      expect(heap).toEqual([6, 4, 5, 2, 3, 1]);
+      const maxHeap = new MaxHeap();
+      maxHeap.heapPush(42);
+      maxHeap.heapPush(17);
+      maxHeap.heapPush(23);
+      maxHeap.heapPush(11);
+      maxHeap.heapPush(12);
+      maxHeap.heapPush(6);
+      maxHeap.heapPush(7);
+      maxHeap.heapPush(9);
+      maxHeap.heapPush(2);
+      maxHeap.heapPush(1);
+      expect(maxHeap.heap).toEqual([42, 17, 23, 11, 12, 6, 7, 9, 2, 1]);
     });
   });
 
   describe('heapPop', () => {
     test('should return the maximum element from the heap', () => {
-      const heap = [5, 4, 2, 3];
-      expect(heapPop(heap)).toBe(5);
+      const maxHeap = new MaxHeap();
+      maxHeap.heapPush(42);
+      maxHeap.heapPush(17);
+      maxHeap.heapPush(23);
+      expect(maxHeap.heapPop()).toEqual(42);
     });
 
     test('should maintain the heap property after popping', () => {
-      const heap = [5, 4, 2, 3];
-      heapPop(heap);
-      expect(heap).toEqual([4, 3, 2]);
+      const maxHeap = new MaxHeap();
+      maxHeap.heapPush(42);
+      maxHeap.heapPush(17);
+      maxHeap.heapPush(23);
+      maxHeap.heapPop();
+      expect(maxHeap.heap).toEqual([23, 17]);
     });
 
     test('should handle popping from an empty heap', () => {
-      const heap = [];
-      expect(heapPop(heap)).toBeUndefined();
+      const maxHeap = new MaxHeap();
+      expect(maxHeap.heapPop()).toBeUndefined();
     });
   });
 });

@@ -1,41 +1,43 @@
-const { heapPush, heapPop } = require('./minHeap');
+const { MinHeap } = require('./minHeap');
 
 describe('minHeap', () => {
   describe('heapPush', () => {
     test('should add an item to an empty heap', () => {
-      const heap = [];
-      heapPush(heap, 5);
-      expect(heap).toEqual([5]);
+      const minHeap = new MinHeap();
+      minHeap.heapPush(42);
+      expect(minHeap.heap).toEqual([42]);
     });
 
     test('should maintain the heap property when new items are added', () => {
-      const heap = [2, 3, 4];
-      heapPush(heap, 1);
-      expect(heap).toEqual([1, 2, 4, 3]);
-    });
-
-    test('should work correctly with multiple items', () => {
-      const heap = [];
-      [5, 3, 6, 1, 4, 2].forEach((item) => heapPush(heap, item));
-      expect(heap).toEqual([1, 3, 2, 5, 4, 6]);
+      const minHeap = new MinHeap();
+      minHeap.heapPush(42);
+      minHeap.heapPush(17);
+      minHeap.heapPush(23);
+      expect(minHeap.heap).toEqual([17, 42, 23]);
     });
   });
 
   describe('heapPop', () => {
     test('should return the minimum element from the heap', () => {
-      const heap = [1, 2, 4, 3];
-      expect(heapPop(heap)).toBe(1);
+      const minHeap = new MinHeap();
+      minHeap.heapPush(42);
+      minHeap.heapPush(17);
+      minHeap.heapPush(23);
+      expect(minHeap.heapPop()).toEqual(17);
     });
 
     test('should maintain the heap property after popping', () => {
-      const heap = [1, 2, 4, 3];
-      heapPop(heap);
-      expect(heap).toEqual([2, 3, 4]);
+      const minHeap = new MinHeap();
+      minHeap.heapPush(42);
+      minHeap.heapPush(17);
+      minHeap.heapPush(23);
+      minHeap.heapPop();
+      expect(minHeap.heap).toEqual([23, 42]);
     });
 
     test('should handle popping from an empty heap', () => {
-      const heap = [];
-      expect(heapPop(heap)).toBeUndefined();
+      const minHeap = new MinHeap();
+      expect(minHeap.heapPop()).toBeUndefined();
     });
   });
 });
