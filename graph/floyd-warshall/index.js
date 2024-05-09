@@ -1,5 +1,4 @@
-const floydWarshall = (graph) => {
-  const n = graph.length;
+const floydWarshall = (n, graph) => {
   const dist = Array.from({ length: n }, () => Array(n).fill(Infinity));
   for (let i = 0; i < n; i++) dist[i][i] = 0;
   graph.forEach(([from, to, weight]) => {
