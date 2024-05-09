@@ -50,7 +50,7 @@ class MaxHeap {
     if (this.heap.length) {
       const maxItem = this.heap[0];
       this.heap[0] = lastItem;
-      _shiftDown(this.heap);
+      this._shiftDown(this.heap);
       return maxItem;
     }
     return lastItem;
