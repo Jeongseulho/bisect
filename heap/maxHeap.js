@@ -5,29 +5,26 @@ class MaxHeap {
 
   _shiftDown() {
     let targetIdx = 0;
-    let leftChildIdx = 1;
-    let rightChildIdx = 2;
-    let largerChildIdx = leftChildIdx;
-    while (largerChildIdx < this.heap.length) {
-      if (
+
+    while (true) {
+      let leftChildIdx = targetIdx * 2 + 1;
+      let rightChildIdx = leftChildIdx + 1;
+
+      if (leftChildIdx >= this.heap.length) break;
+
+      let largerChildIdx =
         rightChildIdx < this.heap.length &&
         this.heap[rightChildIdx] > this.heap[leftChildIdx]
-      ) {
-        largerChildIdx = rightChildIdx;
-      } else {
-        largerChildIdx = leftChildIdx;
-      }
+          ? rightChildIdx
+          : leftChildIdx;
 
-      if (this.heap[largerChildIdx] < this.heap[targetIdx]) break;
+      if (this.heap[largerChildIdx] <= this.heap[targetIdx]) break;
 
       [this.heap[targetIdx], this.heap[largerChildIdx]] = [
         this.heap[largerChildIdx],
         this.heap[targetIdx],
       ];
       targetIdx = largerChildIdx;
-      leftChildIdx = targetIdx * 2 + 1;
-      rightChildIdx = leftChildIdx + 1;
-      largerChildIdx = leftChildIdx;
     }
   }
 

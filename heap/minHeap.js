@@ -5,19 +5,18 @@ class MinHeap {
 
   _shiftDown() {
     let targetIdx = 0;
-    let leftChildIdx = 1;
-    let rightChildIdx = 2;
-    let smallerChildIdx = leftChildIdx;
 
-    while (smallerChildIdx < this.heap.length) {
-      if (
+    while (true) {
+      let leftChildIdx = targetIdx * 2 + 1;
+      let rightChildIdx = leftChildIdx + 1;
+
+      if (leftChildIdx >= this.heap.length) break;
+
+      let smallerChildIdx =
         rightChildIdx < this.heap.length &&
         this.heap[rightChildIdx] < this.heap[leftChildIdx]
-      ) {
-        smallerChildIdx = rightChildIdx;
-      } else {
-        smallerChildIdx = leftChildIdx;
-      }
+          ? rightChildIdx
+          : leftChildIdx;
 
       if (this.heap[smallerChildIdx] >= this.heap[targetIdx]) break;
 
@@ -25,11 +24,7 @@ class MinHeap {
         this.heap[smallerChildIdx],
         this.heap[targetIdx],
       ];
-
       targetIdx = smallerChildIdx;
-      leftChildIdx = targetIdx * 2 + 1;
-      rightChildIdx = leftChildIdx + 1;
-      smallerChildIdx = leftChildIdx;
     }
   }
 
