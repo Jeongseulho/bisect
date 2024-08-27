@@ -3,54 +3,66 @@ class MinHeap {
     this.heap = [];
   }
 
-  _shiftDown() {
-    let targetIdx = 0;
+  size() {
+    return this.heap.length;
+  }
 
-    while (true) {
-      let leftChildIdx = targetIdx * 2 + 1;
-      let rightChildIdx = leftChildIdx + 1;
+  isEmpty() {
+    return this.size() === 0;
+  }
 
-      if (leftChildIdx >= this.heap.length) break;
+  parent(i) {
+    return Math.floor((i - 1) / 2);
+  }
 
-      let smallerChildIdx =
-        rightChildIdx < this.heap.length &&
-        this.heap[rightChildIdx] < this.heap[leftChildIdx]
-          ? rightChildIdx
-          : leftChildIdx;
+  leftChild(i) {
+    return 2 * i + 1;
+  }
 
-      if (this.heap[smallerChildIdx] >= this.heap[targetIdx]) break;
+  rightChild(i) {
+    return 2 * i + 2;
+  }
 
-      [this.heap[targetIdx], this.heap[smallerChildIdx]] = [
-        this.heap[smallerChildIdx],
-        this.heap[targetIdx],
-      ];
-      targetIdx = smallerChildIdx;
+  swap(i, j) {
+    [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+  }
+
+  shiftUp(i) {
+    while (i > 0 && this.heap[this.parent(i)] > this.heap[i]) {
+      this.swap(i, this.parent(i));
+      i = this.parent(i);
     }
   }
 
-  push(newItem) {
-    this.heap.push(newItem);
-    let targetIdx = this.heap.length - 1;
+  shiftDown(i) {
+    while (this.leftChild(i) < this.size()) {
+      let minChild = this.leftChild(i);
 
-    while (targetIdx > 0) {
-      const parentIdx = (targetIdx - 1) >> 1;
-      const parent = this.heap[parentIdx];
-      if (newItem >= parent) break;
-      this.heap[targetIdx] = parent;
-      targetIdx = parentIdx;
+      if (
+        this.rightChild(i) < this.size() &&
+        this.heap[this.rightChild(i)] < this.heap[minChild]
+      )
+        minChild = this.rightChild(i);
+
+      if (this.heap[i] <= this.heap[minChild]) break;
+      this.swap(i, minChild);
+      i = minChild;
     }
-    this.heap[targetIdx] = newItem;
+  }
+
+  push(value) {
+    this.heap.push(value);
+    this.shiftUp(this.size() - 1);
   }
 
   pop() {
-    const lastItem = this.heap.pop();
-    if (this.heap.length) {
-      const minItem = this.heap[0];
-      this.heap[0] = lastItem;
-      this._shiftDown(this.heap);
-      return minItem;
-    }
-    return lastItem;
+    if (this.isEmpty()) return;
+
+    const min = this.heap[0];
+    this.swap(0, this.size() - 1);
+    this.heap.pop();
+    this.shiftDown(0);
+    return min;
   }
 }
 
