@@ -36,13 +36,11 @@ class MaxHeap {
 
   shiftDown(i) {
     while (this.leftChild(i) < this.size()) {
-      let maxChild = this.leftChild(i);
-
-      if (
+      const maxChild =
         this.rightChild(i) < this.size() &&
-        this.heap[this.rightChild(i)] > this.heap[maxChild]
-      )
-        maxChild = this.rightChild(i);
+        this.heap[this.rightChild(i)] > this.heap[this.leftChild(i)]
+          ? this.rightChild(i)
+          : this.leftChild(i);
 
       if (this.heap[i] >= this.heap[maxChild]) break;
       this.swap(i, maxChild);

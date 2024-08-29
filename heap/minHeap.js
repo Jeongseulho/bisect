@@ -36,13 +36,11 @@ class MinHeap {
 
   shiftDown(i) {
     while (this.leftChild(i) < this.size()) {
-      let minChild = this.leftChild(i);
-
-      if (
+      const minChild =
         this.rightChild(i) < this.size() &&
         this.heap[this.rightChild(i)] < this.heap[minChild]
-      )
-        minChild = this.rightChild(i);
+          ? this.rightChild(i)
+          : this.leftChild(i);
 
       if (this.heap[i] <= this.heap[minChild]) break;
       this.swap(i, minChild);
