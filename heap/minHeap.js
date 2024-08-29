@@ -38,7 +38,7 @@ class MinHeap {
     while (this.leftChild(i) < this.size()) {
       const minChild =
         this.rightChild(i) < this.size() &&
-        this.heap[this.rightChild(i)] < this.heap[minChild]
+        this.heap[this.rightChild(i)] < this.heap[this.leftChild(i)]
           ? this.rightChild(i)
           : this.leftChild(i);
 
