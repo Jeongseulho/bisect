@@ -7,7 +7,7 @@
 function binarySearchRight(arr, item) {
   let low = 0;
   let high = arr.length - 1;
-  while (low < high) {
+  while (low <= high) {
     let mid = parseInt((low + high) / 2);
     if (arr[mid] <= item) low = mid + 1;
     else high = mid - 1;
