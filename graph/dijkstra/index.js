@@ -1,39 +1,96 @@
-const dijkstra = (n, graph, startNode) => {
-  const visited = Array(n).fill(false);
-  const minDist = Array(n).fill(Infinity);
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
 
+  size() {
+    return this.heap.length;
+  }
+
+  isEmpty() {
+    return this.size() === 0;
+  }
+
+  parent(i) {
+    return Math.floor((i - 1) / 2);
+  }
+
+  leftChild(i) {
+    return 2 * i + 1;
+  }
+
+  rightChild(i) {
+    return 2 * i + 2;
+  }
+
+  getValue(i) {
+    return this.heap[i][2];
+  }
+
+  swap(i, j) {
+    [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+  }
+
+  shiftUp(i) {
+    while (i > 0 && this.getValue(this.parent(i)) > this.getValue(i)) {
+      this.swap(i, this.parent(i));
+      i = this.parent(i);
+    }
+  }
+
+  shiftDown(i) {
+    while (this.leftChild(i) < this.size()) {
+      const minChild =
+        this.rightChild(i) < this.size() &&
+        this.getValue(this.rightChild(i)) < this.getValue(this.leftChild(i))
+          ? this.rightChild(i)
+          : this.leftChild(i);
+
+      if (this.getValue(i) <= this.getValue(minChild)) break;
+      this.swap(i, minChild);
+      i = minChild;
+    }
+  }
+
+  push(value) {
+    this.heap.push(value);
+    this.shiftUp(this.size() - 1);
+  }
+
+  pop() {
+    if (this.isEmpty()) return;
+
+    const min = this.heap[0];
+    this.swap(0, this.size() - 1);
+    this.heap.pop();
+    this.shiftDown(0);
+    return min;
+  }
+}
+
+const dijkstra = (n, graph, startNode) => {
+  const minDist = Array(n).fill(Infinity);
+  minDist[startNode] = 0;
   const adjList = Array.from({ length: n }, () => []);
 
   graph.forEach(([from, to, weight]) => {
     adjList[from].push([to, weight]);
+    adjList[to].push([from, weight]);
   });
 
-  const getMinDistNode = () => {
-    let min = Infinity;
-    let node = -1;
-    for (let i = 0; i < n; i++) {
-      if (!visited[i] && min > minDist[i]) {
-        min = minDist[i];
-        node = i;
+  const priorityQueue = new MinHeap();
+  priorityQueue.push([startNode, 0]);
+
+  while (!priorityQueue.isEmpty()) {
+    const [node, _] = priorityQueue.pop();
+
+    adjList[node].forEach(([nextNode, weight]) => {
+      if (minDist[nextNode] > minDist[node] + weight) {
+        minDist[nextNode] = minDist[node] + weight;
+        priorityQueue.push([nextNode, minDist[nextNode]]);
       }
-    }
-    return node;
-  };
-
-  const startDijkstra = (startNode) => {
-    minDist[startNode] = 0;
-
-    for (let i = 0; i < n; i++) {
-      const node = getMinDistNode();
-      visited[node] = true;
-      for (const [adjNode, weight] of adjList[node]) {
-        if (!visited[adjNode])
-          minDist[adjNode] = Math.min(minDist[node] + weight, minDist[adjNode]);
-      }
-    }
-  };
-
-  startDijkstra(startNode);
+    });
+  }
 
   return minDist;
 };
